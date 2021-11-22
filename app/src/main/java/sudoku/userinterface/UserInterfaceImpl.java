@@ -35,7 +35,7 @@ public class UserInterfaceImpl implements IUserInterface.View,
     private static final double BOARD_PADDING = 50;
 
     private static final double BOARD_X_AND_Y = 576;
-    private static final Color WINDOW_BACKGROUND_COLOR = Color.rgb(0, 150, 136);
+    private static final Color WINDOW_BACKGROUND_COLOR = Color.rgb(40, 40, 40);
     private static final Color BOARD_BACKGROUND_COLOR = Color.rgb(224, 242, 241);
     private static final String SUDOKU = "Sudoku";
 
@@ -257,7 +257,7 @@ public class UserInterfaceImpl implements IUserInterface.View,
 
         event.consume();
     }
-    
+
     private void handleInput(int value, Object source) {
         listener.onSudokuInput(
                 ((SudokuTextField) source).getX(),
