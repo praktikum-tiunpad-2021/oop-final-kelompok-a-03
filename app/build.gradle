@@ -27,7 +27,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'sudoku.App'
+    mainClass = 'sudoku.SudokuApps'
 }
 
 javafx {

@@ -1,6 +1,6 @@
 package sudoku.userinterface;
 
-import sudoku.constants.GameState;
+import sudoku.konstanta.GameState;
 import sudoku.problemdomain.Coordinates;
 import sudoku.problemdomain.SudokuGame;
 import javafx.event.EventHandler;
@@ -21,28 +21,17 @@ import javafx.stage.Stage;
 
 import java.util.HashMap;
 
-/**
- * Manages the window, and displays a pop up notification when the user completes the puzzle.
- */
-public class UserInterfaceImpl implements IUserInterfaceContract.View,
+public class UserInterfaceImpl implements IUserInterface.View,
         EventHandler<KeyEvent> {
     private final Stage stage;
     private final Group root;
 
-    //This HashMap stores the Hash Values (a unique identifier which is automatically generated;
-    // see java.lang.object in the documentation) of each TextField by their Coordinates. When a SudokuGame
-    //is given to the updateUI method, we iterate through it by X and Y coordinates and assign the values to the
-    //appropriate TextField therein. This means we don't need to hold a reference variable for every god damn
-    //text field in this app; which would be awful.
-    //The Key (<Key, Value> -> <Coordinates, Integer>) will be the HashCode of a given InputField for ease of lookup
     private HashMap<Coordinates, SudokuTextField> textFieldCoordinates;
 
-    private IUserInterfaceContract.EventListener listener;
+    private IUserInterface.EventListener listener;
 
-    //Size of the window
     private static final double WINDOW_Y = 732;
     private static final double WINDOW_X = 668;
-    //distance between window and board
     private static final double BOARD_PADDING = 50;
 
     private static final double BOARD_X_AND_Y = 576;
@@ -50,16 +39,6 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
     private static final Color BOARD_BACKGROUND_COLOR = Color.rgb(224, 242, 241);
     private static final String SUDOKU = "Sudoku";
 
-    /**
-     * Stage and Group are JavaFX specific classes for modifying the UI. Think of them as containers of various UI
-     * components.
-     *
-     * A HashMap is a data structure which stores key/value pairs. Rather than creating a member variable for every
-     * SudokuTextField object (all 81 of them), I instead store these references within a HashMap, and I retrieve
-     * them by using their X and Y Coordinates as a "key" (a unique value used to look something up).
-     *
-     * @param stage
-     */
     public UserInterfaceImpl(Stage stage) {
         this.stage = stage;
         this.root = new Group();
@@ -69,7 +48,7 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
 
 
     @Override
-    public void setListener(IUserInterfaceContract.EventListener listener) {
+    public void setListener(IUserInterface.EventListener listener) {
         this.listener = listener;
     }
 
@@ -82,13 +61,6 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
         stage.show();
     }
 
-    /**
-     * 1. Draw each TextField based on x and y values.
-     * 2. As each TextField is drawn, add it's coordinates (x, y) based on it's Hash Value to
-     * to the HashMap.
-     *
-     * @param root
-     */
     private void drawTextFields(Group root) {
         //where to start drawing the numbers
         final int xOrigin = 50;
@@ -119,12 +91,6 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
         }
     }
 
-    /**
-     * Helper method for styling a sudoku tile number
-     * @param tile
-     * @param x
-     * @param y
-     */
     private void styleSudokuTile(SudokuTextField tile, double x, double y) {
         Font numberFont = new Font(32);
         tile.setFont(numberFont);
@@ -138,13 +104,6 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
         tile.setBackground(Background.EMPTY);
     }
 
-
-    /**
-     * In order to draw the various lines that make up the Sudoku grid, we use a starting x and y offset
-     * value (remember, x grows positively from left to right, and y grows positively from top to bottom).
-     * Each square is meant to be 64x64 units, so we add that number each time a
-     * @param root
-     */
     private void drawGridLines(Group root) {
         //draw vertical lines starting at 114x and 114y:
         int xAndY = 114;
@@ -180,12 +139,6 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
         }
     }
 
-    /**
-     * Convenience method to reduce repetitious code.
-     *
-     * X, Y, Height, Width,
-     * @return A Rectangle to specification
-     */
     public Rectangle getLine(double x, double y, double height, double width){
         Rectangle line = new Rectangle();
 
@@ -200,20 +153,12 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
 
     }
 
-    /**
-     * Background of the primary window
-     * @param root
-     */
     private void drawBackground(Group root) {
         Scene scene = new Scene(root, WINDOW_X, WINDOW_Y);
         scene.setFill(WINDOW_BACKGROUND_COLOR);
         stage.setScene(scene);
     }
 
-    /**
-     * Background of the actual sudoku board, offset from the window by BOARD_PADDING
-     * @param root
-     */
     private void drawSudokuBoard(Group root) {
         Rectangle boardBackground = new Rectangle();
         boardBackground.setX(BOARD_PADDING);
@@ -232,10 +177,6 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
         root.getChildren().add(title);
     }
 
-    /**
-     * Each time the user makes an input (which can be 0 to delete a number), we update the user
-     * interface appropriately.
-     */
     @Override
     public void updateSquare(int x, int y, int input) {
         SudokuTextField tile = textFieldCoordinates.get(new Coordinates(x, y));
@@ -255,7 +196,7 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
                 TextField tile = textFieldCoordinates.get(new Coordinates(xIndex, yIndex));
 
                 String value = Integer.toString(
-                        game.getCopyOfGridState()[xIndex][yIndex]
+                        game.getGridState()[xIndex][yIndex]
                 );
 
                 if (value.equals("0")) value = "";
@@ -263,8 +204,6 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
                         value
                 );
 
-                //If a given tile has a non-zero value and the state of the game is GameState.NEW, then mark
-                //the tile as read only. Otherwise, ensure that it is NOT read only.
                 if (game.getGameState() == GameState.NEW){
                     if (value.equals("")) {
                         tile.setStyle("-fx-opacity: 1;");
@@ -318,11 +257,7 @@ public class UserInterfaceImpl implements IUserInterfaceContract.View,
 
         event.consume();
     }
-
-    /**
-     * @param value  expected to be an integer from 0-9, inclusive
-     * @param source the textfield object that was clicked.
-     */
+    
     private void handleInput(int value, Object source) {
         listener.onSudokuInput(
                 ((SudokuTextField) source).getX(),
