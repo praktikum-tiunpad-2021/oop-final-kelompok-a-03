@@ -62,10 +62,8 @@ public class UserInterfaceImpl implements IUserInterface.View,
     }
 
     private void drawTextFields(Group root) {
-        //where to start drawing the numbers
         final int xOrigin = 50;
         final int yOrigin = 50;
-        //how much to move the x or y value after each loop
         final int xAndYDelta = 64;
 
 
@@ -73,15 +71,10 @@ public class UserInterfaceImpl implements IUserInterface.View,
             for (int yIndex = 0; yIndex < 9; yIndex++) {
                 int x = xOrigin + xIndex * xAndYDelta;
                 int y = yOrigin + yIndex * xAndYDelta;
-                //draw it
                 SudokuTextField tile = new SudokuTextField(xIndex, yIndex);
 
-                //encapsulated style information
                 styleSudokuTile(tile, x, y);
 
-                //Note: Note that UserInterfaceImpl implements EventHandler<ActionEvent> in the class declaration.
-                //By passing "this" (which means the current instance of UserInterfaceImpl), when an action occurs,
-                //it will jump straight to "handle(ActionEvent actionEvent)" down below.
                 tile.setOnKeyPressed(this);
 
                 textFieldCoordinates.put(new Coordinates(xIndex, yIndex), tile);
@@ -105,7 +98,6 @@ public class UserInterfaceImpl implements IUserInterface.View,
     }
 
     private void drawGridLines(Group root) {
-        //draw vertical lines starting at 114x and 114y:
         int xAndY = 114;
         int index = 0;
         while (index < 8) {
@@ -196,7 +188,7 @@ public class UserInterfaceImpl implements IUserInterface.View,
                 TextField tile = textFieldCoordinates.get(new Coordinates(xIndex, yIndex));
 
                 String value = Integer.toString(
-                        game.getGridState()[xIndex][yIndex]
+                        game.getCopyOfGridState()[xIndex][yIndex]
                 );
 
                 if (value.equals("0")) value = "";

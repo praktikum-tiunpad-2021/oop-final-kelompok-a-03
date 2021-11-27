@@ -1,6 +1,6 @@
-// representasi visual dari game sudoku
 package sudoku.problemdomain;
 
+import sudoku.computationlogic.SudokuUtilities;
 import sudoku.konstanta.GameState;
 import java.io.Serializable;
 
@@ -19,7 +19,7 @@ public class SudokuGame implements Serializable {
     return gameState;
   }
 
-  public int[][] getGridState() {
-    return gridState;
-  }
+  public int[][] getCopyOfGridState() {
+    return SudokuUtilities.copyToNewArray(gridState);
+}
 }
