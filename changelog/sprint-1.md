@@ -11,23 +11,23 @@
 ## Sprint Overview
 | Planned (n)   | Completed (n) |
 | ------------- |-------------- |
-| 3             | n             |
+| 3             | 2             |
 
 ## Sprint 1 Backlog
 
 | ID  | Title/Desc | Asignee | Status |
 | --- | ---------- | ------- | ------ |
-| 1.1 | Tampilan grid 9x9 dengan subgrid | Nama | - |
-| 1.2 | Implementasi dasar PBO | Nama | - |
-| 1.3 | Tampilan Tingkat Kesulitan | Nama | - |
+| 1.1 | Tampilan grid 9x9 dengan subgrid | Alfadli | Done |
+| 1.2 | Implementasi dasar PBO | Wafi | Done |
+| 1.3 | Tampilan Tingkat Kesulitan | Faiq | Failed |
 
 ## Retrospective 
 
-Sprint kemarin dianggap terlalu sedikit sehingga diperlukan adanya penyesuaian tugas.
+Sprint kemarin dianggap terlalu sedikit sehingga diperlukan adanya penyesuaian tugas. Kemudia, masih terdapat error karena masih membutuhkan class lain
 
 ## Next Sprint Backlog (Sprint 2)
 | ID  | Title/Desc | Asignee | 
 | --- | ---------- | ------- | 
-| 2.1 | Tampilan Tombol Restart | Nama | 
-| 2.2 | Tampilan String dan Clue | Nama |
-| 2.3 | Mengacak Angka | Nama |  
+| 2.1 | Tampilan Tombol Restart | Alfadli | 
+| 2.2 | Tampilan String dan Clue | Wafi |
+| 2.3 | Mengacak Angka | Faiq |  

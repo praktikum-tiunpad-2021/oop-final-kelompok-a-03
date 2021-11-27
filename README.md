@@ -4,7 +4,8 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
 
 [Challenge Guidelines](challenge-guideline.md)
 
-**Project Sudoku (Java GUI) dengan implementasi konsep OOP (Object Oriented Programming) dan Java Swing berbasis GUI. Sudoku adalah sejenis teka-teki logika. Tujuannya adalah untuk mengisikan angka-angka dari 1 sampai 9 ke dalam jaring-jaring 9×9 yang terdiri dari 9 kotak 3×3 tanpa ada angka yang berulang di satu baris, kolom atau kotak
+**Projek ini merupakan projek bahasa pemrograman Java yang mengimplementasikan konsep Object-Oriented Programming dan Java GUI menggunakan JavaFX. 
+Sudoku merupakan puzzle yang berbasis logika dimana pemain dapat meletakkan angka pada kotak yang kosong. Sudoku terdiri dari 9 daerah 3x3 yang tersusun oleh 9 kotak 3x3 yang lebih kecil, dengan total 81 kotak. Tujuannya adalah pemain harus mengisi angka 1 sampai 9 pada kotak yang kosong dimana pada setiap baris, kolom, dan daerah 3x3 tidak ada angka yang berulang.
 **
 
 ## Credits
@@ -17,19 +18,24 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
 ## Change log
 - **[Sprint Planning](changelog/sprint-planning.md) - 17 Nov** 
    - Pencarinan referensi GUI sudoku di Java
-   - Diskusi dengan team tentang pembuatan GUI
+   - Diskusi dengan team tentang Planning Keseluruhan
 
 - **[Sprint 1](changelog/sprint-1.md) - (date from 18 Nov until 22 Nov)** 
-   - Memulai pembuatan board
-   - Pembuatan menu di board dan main java untuk menjalankan
+   - Tampilan grid 9x9 dengan subgrid
+   - Implementasi dasar PBO
+   - Tampilan Tingkat Kesulitan
 
 - **[Sprint 2](changelog/sprint-2.md) - (date from 23 Nov until 29 Nov)** 
-   - Pembuatan level dan memasukkannya kedalam GUI
-   - Pengacakan angka serta menyatukan file GUI menjadi satu
+   - Tampilan Tombol Restart
+   - Tampilan String dan Clue
+   - Mengacak Angka
    
 - **[Sprint 3](changelog/sprint-3.md) - (date from 30 until 6 Dec)** 
-   - Challenge Idea Menu Bar
-   - Penyelesaian Tampilan
+   - Set angka yang tidak bisa diganti
+   - Cek input benar/salah
+   - Highlight grid yang bernilai sama
+   - Perbaikan tampilan
+   - Menu Bar
 
 ## Running The App
 

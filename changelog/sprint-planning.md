@@ -21,6 +21,7 @@
 | 3.2 | Cek input benar/salah | - |
 | 3.3 | Highlight grid yang bernilai sama | - |
 | 3.4 | Perbaikan tampilan | - |
+| 3.5 | Menu Bar | - |
 
 ## Sprint Backlog Plan (Sprint 1)
 | ID  | Title/Desc | Asignee | 
