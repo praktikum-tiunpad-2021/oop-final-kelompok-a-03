@@ -6,7 +6,7 @@ public interface IUserInterface {
   interface EventListener {
     void onSudokuInput(int x, int y, int input);
 
-    void onDialogClick();
+    void onButtonClick();
   }
 
   interface View {

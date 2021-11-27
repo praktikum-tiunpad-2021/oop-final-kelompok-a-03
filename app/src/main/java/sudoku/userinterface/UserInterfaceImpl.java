@@ -3,26 +3,35 @@ package sudoku.userinterface;
 import sudoku.konstanta.GameState;
 import sudoku.problemdomain.Coordinates;
 import sudoku.problemdomain.SudokuGame;
+
+import sudoku.persistence.LocalStorageImpl;
+import sudoku.problemdomain.IStorage;
+
 import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ButtonBase;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.Optional;
 import java.util.HashMap;
 
 public class UserInterfaceImpl implements IUserInterface.View,
-        EventHandler<KeyEvent> {
+        EventHandler<KeyEvent>{
     private final Stage stage;
     private final Group root;
 
@@ -54,7 +63,7 @@ public class UserInterfaceImpl implements IUserInterface.View,
 
     public void initializeUserInterface() {
         drawBackground(root);
-        drawTitle(root);
+        drawButtons(root);
         drawSudokuBoard(root);
         drawTextFields(root);
         drawGridLines(root);
@@ -161,12 +170,46 @@ public class UserInterfaceImpl implements IUserInterface.View,
         root.getChildren().add(boardBackground);
     }
 
-    private void drawTitle(Group root) {
-        Text title = new Text(235, 690, SUDOKU);
-        title.setFill(Color.WHITE);
-        Font titleFont = new Font(43);
-        title.setFont(titleFont);
-        root.getChildren().add(title);
+    private void drawButtons(Group root) {
+        Button restartBtn = drawButton(235, 670, "Restart");
+        restartBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                levelDialog();
+            };
+        });
+
+        root.getChildren().add(restartBtn);
+    }
+
+    private Button drawButton(int x, int y, String text){
+        Button btn = new Button(text);
+
+        btn.setLayoutX(x);
+        btn.setLayoutY(y);
+
+        return btn;
+    }
+
+    private void levelDialog(){
+        ButtonType easy = new ButtonType("Mudah");
+        ButtonType medium = new ButtonType("Sedang");
+        ButtonType hard = new ButtonType("Sulit");
+
+        Alert newGame = new Alert(Alert.AlertType.NONE);
+        newGame.setTitle("New Game");
+        newGame.setHeaderText("Pilih tingkat kesulitan.");
+        newGame.getButtonTypes().addAll(easy, medium, hard);
+
+        Optional<ButtonType> option = newGame.showAndWait();
+
+		if (option.get() == easy) {
+            listener.onButtonClick();
+		} else if (option.get() == medium) {
+			listener.onButtonClick();
+		} else if (option.get() == hard) {
+			listener.onButtonClick();
+		}
     }
 
     @Override
@@ -214,7 +257,7 @@ public class UserInterfaceImpl implements IUserInterface.View,
         Alert dialog = new Alert(Alert.AlertType.CONFIRMATION, message, ButtonType.OK);
         dialog.showAndWait();
 
-        if (dialog.getResult() == ButtonType.OK) listener.onDialogClick();
+        if (dialog.getResult() == ButtonType.OK) levelDialog();
     }
 
     @Override

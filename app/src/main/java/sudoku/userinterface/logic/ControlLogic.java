@@ -10,16 +10,9 @@ import sudoku.userinterface.IUserInterface;
 
 import java.io.IOException;
 
-/**
- * Since this is a single screen application, just one container (class) for the logic of the user interface is
- * necessary. Break these things up when building applications with more screens/features. Don't build God Classes!
- */
-
 public class ControlLogic implements IUserInterface.EventListener {
 
     private IStorage storage;
-    //Remember, this could be the real UserInterfaceImpl, or it could be a test class
-    //which implements the same interface!
     private IUserInterface.View view;
 
     public ControlLogic(IStorage storage, IUserInterface.View view) {
@@ -64,7 +57,7 @@ public class ControlLogic implements IUserInterface.EventListener {
     }
 
     @Override
-    public void onDialogClick() {
+    public void onButtonClick() {
         try {
             storage.updateGameData(
                     GameLogic.getNewGame()
