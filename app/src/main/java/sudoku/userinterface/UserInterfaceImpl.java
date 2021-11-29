@@ -204,10 +204,13 @@ public class UserInterfaceImpl implements IUserInterface.View,
         Optional<ButtonType> option = newGame.showAndWait();
 
 		if (option.get() == easy) {
+            SudokuGame.difficulty = "easy";
             listener.onButtonClick();
 		} else if (option.get() == medium) {
+            SudokuGame.difficulty = "medium";
 			listener.onButtonClick();
 		} else if (option.get() == hard) {
+            SudokuGame.difficulty = "hard";
 			listener.onButtonClick();
 		}
     }

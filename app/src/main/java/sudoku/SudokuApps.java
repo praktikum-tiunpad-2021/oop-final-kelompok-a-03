@@ -9,6 +9,10 @@ import javafx.stage.Stage;
 import sudoku.userinterface.IUserInterface;
 import sudoku.userinterface.UserInterfaceImpl;
 import sudoku.buildlogic.SudokuBuildLogic;
+import sudoku.problemdomain.SudokuGame;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class SudokuApps extends Application {
   private IUserInterface.View uiImpl;
@@ -16,6 +20,11 @@ public class SudokuApps extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     uiImpl = new UserInterfaceImpl(primaryStage);
+    List<String> args = getParameters().getRaw();
+
+    if(!args.isEmpty()){
+      SudokuGame.difficulty = String.valueOf(args.get(0));
+    }
 
     try {
         SudokuBuildLogic.build(uiImpl);
@@ -26,7 +35,7 @@ public class SudokuApps extends Application {
   }
 
   public static void main(String[] args) {
-    launch();
+    launch(args);
   }
 
 }

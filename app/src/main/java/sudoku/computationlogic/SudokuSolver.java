@@ -16,14 +16,14 @@ public class SudokuSolver {
      * If not, then erase the 9 from the current cell, call the previous cell in the enumeration the new “current cell”, and
      * continue with step 3.
      */
-    public static boolean puzzleIsSolvable(int[][] puzzle) {
+    public static boolean puzzleIsSolvable(int[][] puzzle, int jumlah) {
 
         //step 1:
-        Coordinates[] emptyCells = typeWriterEnumerate(puzzle);
+        Coordinates[] emptyCells = typeWriterEnumerate(puzzle, jumlah);
 
         int index = 0;
         int input = 1;
-        while (index < 40) {
+        while (index < jumlah) {
             Coordinates current = emptyCells[index];
             input = 1;
             while (input < 10) {
@@ -39,7 +39,7 @@ public class SudokuSolver {
                 } else {
                     index++;
 
-                    if (index == 39) {
+                    if (index == (jumlah-1)) {
                         return true;
                     }
 
@@ -52,14 +52,14 @@ public class SudokuSolver {
         return false;
     }
 
-    private static Coordinates[] typeWriterEnumerate(int[][] puzzle) {
-        Coordinates[] emptyCells = new Coordinates[40];
+    private static Coordinates[] typeWriterEnumerate(int[][] puzzle, int jumlah) {
+        Coordinates[] emptyCells = new Coordinates[jumlah];
         int iterator = 0;
         for (int y = 0; y < BATAS_GRID; y++) {
             for (int x = 0; x < BATAS_GRID; x++) {
                 if (puzzle[x][y] == 0) {
                     emptyCells[iterator] = new Coordinates(x, y);
-                    if (iterator == 39) return emptyCells;
+                    if (iterator == (jumlah-1)) return emptyCells;
                     iterator++;
                 }
             }

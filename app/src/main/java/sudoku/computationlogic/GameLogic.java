@@ -115,12 +115,12 @@ public class GameLogic {
 
     public static boolean columnsAreInvalid(int[][] grid) {
         for (int xIndex = 0; xIndex < BATAS_GRID; xIndex++) {
-            List<Integer> row = new ArrayList<>();
+            List<Integer> column = new ArrayList<>();
             for (int yIndex = 0; yIndex < BATAS_GRID; yIndex++) {
-                row.add(grid[xIndex][yIndex]);
+                column.add(grid[xIndex][yIndex]);
             }
 
-            if (collectionHasRepeats(row)) return true;
+            if (collectionHasRepeats(column)) return true;
         }
 
         return false;

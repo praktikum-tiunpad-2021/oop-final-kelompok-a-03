@@ -8,6 +8,8 @@ import sudoku.problemdomain.SudokuGame;
 import sudoku.userinterface.IUserInterface;
 import sudoku.userinterface.logic.ControlLogic;
 
+import java.util.List;
+
 import java.io.IOException;
 
 public class SudokuBuildLogic {
