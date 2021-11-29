@@ -23,7 +23,7 @@ public class SudokuSolver {
 
         int index = 0;
         int input = 1;
-        while (index < jumlah) {
+        while (index < 40) {
             Coordinates current = emptyCells[index];
             input = 1;
             while (input < 10) {
@@ -39,7 +39,7 @@ public class SudokuSolver {
                 } else {
                     index++;
 
-                    if (index == (jumlah-1)) {
+                    if (index == (40-1)) {
                         return true;
                     }
 
