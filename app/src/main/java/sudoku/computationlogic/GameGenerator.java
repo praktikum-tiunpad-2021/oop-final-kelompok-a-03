@@ -1,6 +1,5 @@
 package sudoku.computationlogic;
 
-import sudoku.konstanta.GameState;
 import sudoku.problemdomain.Coordinates;
 import sudoku.problemdomain.SudokuGame;
 
@@ -11,7 +10,7 @@ import java.util.Random;
 import static sudoku.problemdomain.SudokuGame.BATAS_GRID;
 
 
-class GameGenerator {
+class GameGenerator{
     public static int[][] getNewGameGrid() {
         return unsolveGame(getSolvedGame());
     }
@@ -93,8 +92,16 @@ class GameGenerator {
     */
     private static int[][] unsolveGame(int[][] solvedGame) {
         Random random = new Random(System.currentTimeMillis());
-
         boolean solvable = false;
+        int emptyCells=45;
+
+        if(SudokuGame.difficulty == "easy"){
+            emptyCells = 45;
+        }else if(SudokuGame.difficulty == "medium"){
+            emptyCells = 63;
+        }else if(SudokuGame.difficulty == "hard"){
+            emptyCells = 72;
+        }
 
         int[][] solvableArray = new int[BATAS_GRID][BATAS_GRID];
 
@@ -102,9 +109,9 @@ class GameGenerator {
 
             SudokuUtilities.copySudokuArrayValues(solvedGame, solvableArray);
 
-            //Menghilangkan 40 nilai
+            //Menghilangkan nilai
             int count = 0;
-            while (count < 40) {
+            while (count < emptyCells) {
                 int xCoordinate = random.nextInt(BATAS_GRID);
                 int yCoordinate = random.nextInt(BATAS_GRID);
 
@@ -117,9 +124,8 @@ class GameGenerator {
             int[][] toBeSolved = new int[BATAS_GRID][BATAS_GRID];
             SudokuUtilities.copySudokuArrayValues(solvableArray, toBeSolved);
             //periksa apahal hasilnya masih solvable
-            solvable = SudokuSolver.puzzleIsSolvable(toBeSolved);
+            solvable = SudokuSolver.puzzleIsSolvable(toBeSolved, emptyCells);
 
-            //TODO Delete after tests
             System.out.println(solvable);
         }
 

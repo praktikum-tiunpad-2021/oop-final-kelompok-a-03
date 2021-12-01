@@ -4,10 +4,13 @@ import sudoku.computationlogic.SudokuUtilities;
 import sudoku.konstanta.GameState;
 import java.io.Serializable;
 
+import java.util.List;
+
 public class SudokuGame implements Serializable {
   private final GameState gameState;
   private final int[][] gridState;
 
+  public static String difficulty;
   public static final int BATAS_GRID = 9;
 
   public SudokuGame(GameState gameState, int[][] gridState) {
@@ -21,5 +24,5 @@ public class SudokuGame implements Serializable {
 
   public int[][] getCopyOfGridState() {
     return SudokuUtilities.copyToNewArray(gridState);
-}
+  }
 }

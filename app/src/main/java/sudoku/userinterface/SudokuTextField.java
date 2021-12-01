@@ -1,6 +1,5 @@
 package sudoku.userinterface;
 
-import javafx.scene.control.IndexRange;
 import javafx.scene.control.TextField;
 import java.util.regex.*;
 
@@ -23,14 +22,14 @@ public class SudokuTextField extends TextField{
 
     @Override
     public void replaceText(int i, int i1, String s) {
-        if(!Pattern.matches("[0-9]", s)){
+        if(!s.matches("[0-9]")){
             super.replaceText(i, i1, s);
         }
     }
 
     @Override
     public void replaceSelection(String s) {
-        if(!Pattern.matches("[0-9]", s)){
+        if(!s.matches("[0-9]")){
             super.replaceSelection(s);
         }
     }

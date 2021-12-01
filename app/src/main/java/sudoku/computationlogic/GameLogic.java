@@ -3,12 +3,15 @@ package sudoku.computationlogic;
 import sudoku.konstanta.GameState;
 import sudoku.konstanta.Rows;
 import sudoku.problemdomain.SudokuGame;
+import sudoku.problemdomain.Coordinates;
 
 import java.util.*;
 
 import static sudoku.problemdomain.SudokuGame.BATAS_GRID;;
 
 public class GameLogic {
+    //bikin attribut berupa list yang isinya koordinat angka yang sama. nantinya akan di oper2 
+    private static List<Coordinates> wrongSquares = new ArrayList<>();
 
     public static SudokuGame getNewGame() {
         return new SudokuGame(
@@ -17,8 +20,13 @@ public class GameLogic {
         );
     }
 
+    public static List<Coordinates> getWrongSquares() {
+        return wrongSquares;
+    }
+
     //Memeriksa kondisi game saat ini (aktif atau selesai)
     public static GameState checkForCompletion(int[][] grid) {
+        wrongSquares.clear();
         if (sudokuIsInvalid(grid)) return GameState.ACTIVE;
         if (tilesAreNotFilled(grid)) return GameState.ACTIVE;
         return GameState.COMPLETE;
@@ -69,8 +77,6 @@ public class GameLogic {
                 if (squareIsInvalid(0, 0, grid)) return true;
                 if (squareIsInvalid(0, 3, grid)) return true;
                 if (squareIsInvalid(0, 6, grid)) return true;
-
-                //Otherwise squares appear to be valid
                 return false;
 
             case MIDDLE:
@@ -99,9 +105,14 @@ public class GameLogic {
         while (yIndex < yIndexEnd) {
 
             while (xIndex < xIndexEnd) {
+                if(square.contains(grid[xIndex][yIndex])){
+                    wrongSquares.add(new Coordinates(xIndex, yIndex));
+                }
+
                 square.add(
-                        grid[xIndex][yIndex]
+                    grid[xIndex][yIndex]
                 );
+
                 xIndex++;
             }
             xIndex -= 3;
@@ -109,18 +120,25 @@ public class GameLogic {
             yIndex++;
         }
 
-        if (collectionHasRepeats(square)) return true;
+        if (collectionHasRepeats(square)) {
+            return true;
+        }
+        
         return false;
     }
 
     public static boolean columnsAreInvalid(int[][] grid) {
         for (int xIndex = 0; xIndex < BATAS_GRID; xIndex++) {
-            List<Integer> row = new ArrayList<>();
+            List<Integer> column = new ArrayList<>();
             for (int yIndex = 0; yIndex < BATAS_GRID; yIndex++) {
-                row.add(grid[xIndex][yIndex]);
+                if(column.contains(grid[xIndex][yIndex])){
+                    wrongSquares.add(new Coordinates(xIndex, yIndex));
+                }
+
+                column.add(grid[xIndex][yIndex]);
             }
 
-            if (collectionHasRepeats(row)) return true;
+            if (collectionHasRepeats(column)) return true;
         }
 
         return false;
@@ -130,6 +148,9 @@ public class GameLogic {
         for (int yIndex = 0; yIndex < BATAS_GRID; yIndex++) {
             List<Integer> row = new ArrayList<>();
             for (int xIndex = 0; xIndex < BATAS_GRID; xIndex++) {
+                if(row.contains(grid[xIndex][yIndex])){
+                    wrongSquares.add(new Coordinates(xIndex, yIndex));
+                }
                 row.add(grid[xIndex][yIndex]);
             }
 

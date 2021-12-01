@@ -20,7 +20,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -204,17 +203,21 @@ public class UserInterfaceImpl implements IUserInterface.View,
         Optional<ButtonType> option = newGame.showAndWait();
 
 		if (option.get() == easy) {
+            SudokuGame.difficulty = "easy";
             listener.onButtonClick();
 		} else if (option.get() == medium) {
+            SudokuGame.difficulty = "medium";
 			listener.onButtonClick();
 		} else if (option.get() == hard) {
+            SudokuGame.difficulty = "hard";
 			listener.onButtonClick();
 		}
     }
 
     @Override
-    public void updateSquare(int x, int y, int input) {
+    public void updateSquare(int x, int y, int input, Boolean condition) {
         SudokuTextField tile = textFieldCoordinates.get(new Coordinates(x, y));
+        
         String value = Integer.toString(
                 input
         );
@@ -222,6 +225,11 @@ public class UserInterfaceImpl implements IUserInterface.View,
         if (value.equals("0")) value = "";
 
         tile.textProperty().setValue(value);
+        if(condition == true){
+            tile.setStyle("-fx-text-inner-color:#ff0000;");
+        }else{
+            tile.setStyle("-fx-text-inner-color:green;");
+        }
     }
 
     @Override
@@ -235,9 +243,7 @@ public class UserInterfaceImpl implements IUserInterface.View,
                 );
 
                 if (value.equals("0")) value = "";
-                tile.setText(
-                        value
-                );
+                tile.setText(value);
 
                 if (game.getGameState() == GameState.NEW){
                     if (value.equals("")) {

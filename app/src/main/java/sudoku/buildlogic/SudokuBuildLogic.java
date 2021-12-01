@@ -8,20 +8,17 @@ import sudoku.problemdomain.SudokuGame;
 import sudoku.userinterface.IUserInterface;
 import sudoku.userinterface.logic.ControlLogic;
 
+import java.util.List;
+
 import java.io.IOException;
 
 public class SudokuBuildLogic {
     public static void build(IUserInterface.View userInterface) throws IOException {
         SudokuGame initialState;
         IStorage storage = new LocalStorageImpl();
-
-        try {
-            initialState = storage.getGameData();
-        } catch (IOException e) {
-            //apabila tidak ada data game pada local storage
-            initialState = GameLogic.getNewGame();
-            storage.updateGameData(initialState);
-        }
+            
+        initialState = GameLogic.getNewGame();
+        storage.updateGameData(initialState);
 
         IUserInterface.EventListener uiLogic = new ControlLogic(storage, userInterface);
         userInterface.setListener(uiLogic);
