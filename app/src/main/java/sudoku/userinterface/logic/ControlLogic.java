@@ -35,11 +35,6 @@ public class ControlLogic implements IUserInterface.EventListener {
             storage.updateGameData(gameData);
             view.updateSquare(x, y, input, GameLogic.sudokuIsInvalid(newGridState));
 
-<<<<<<< HEAD
-=======
-            view.updateSquare(x, y, input);
-
->>>>>>> 73fd1613d528a563c8a83b6e7f4e40493a7528d6
             if (gameData.getGameState() == GameState.COMPLETE) view.showDialog(Message.GAME_COMPLETE);
         } catch (IOException e) {
             e.printStackTrace();

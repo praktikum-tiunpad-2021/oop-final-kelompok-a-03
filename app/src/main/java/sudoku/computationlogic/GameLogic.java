@@ -131,13 +131,10 @@ public class GameLogic {
         for (int xIndex = 0; xIndex < BATAS_GRID; xIndex++) {
             List<Integer> column = new ArrayList<>();
             for (int yIndex = 0; yIndex < BATAS_GRID; yIndex++) {
-<<<<<<< HEAD
                 if(column.contains(grid[xIndex][yIndex])){
                     wrongSquares.add(new Coordinates(xIndex, yIndex));
                 }
 
-=======
->>>>>>> 73fd1613d528a563c8a83b6e7f4e40493a7528d6
                 column.add(grid[xIndex][yIndex]);
             }
 
