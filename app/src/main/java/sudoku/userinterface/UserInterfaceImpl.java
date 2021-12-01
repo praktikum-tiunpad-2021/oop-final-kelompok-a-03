@@ -25,6 +25,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.util.Optional;
 import java.util.HashMap;
@@ -66,6 +67,7 @@ public class UserInterfaceImpl implements IUserInterface.View,
         drawSudokuBoard(root);
         drawTextFields(root);
         drawGridLines(root);
+        drawButtonsclue(root);
         stage.show();
     }
 
@@ -181,6 +183,18 @@ public class UserInterfaceImpl implements IUserInterface.View,
         root.getChildren().add(restartBtn);
     }
 
+    private void drawButtonsclue(Group root) {
+        Button clueBtn = drawButton(400, 670, "Clue");
+        clueBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                clueDialog();
+            };
+        });
+
+        root.getChildren().add(clueBtn);
+    }
+
     private Button drawButton(int x, int y, String text){
         Button btn = new Button(text);
 
@@ -212,6 +226,16 @@ public class UserInterfaceImpl implements IUserInterface.View,
             SudokuGame.difficulty = "hard";
 			listener.onButtonClick();
 		}
+    }
+
+    private void clueDialog(){
+        Alert clue = new Alert(Alert.AlertType.NONE);
+        clue.setTitle("Clue");
+        clue.setHeaderText("Tujuan permainan Sudoku adalah mengisi sel-sel yang kosong dengan angka antara 1 dan 9 (setiak sel hanya 1 angka) sesuai dengan petunjuk berikut:\n1. Angka hanya dapat muncul sekali dalam setiap baris\n2. Angka hanya dapat muncul sekali dalam setiap kolom\n3. Angka hanya dapat muncul sekali dalam setiap area");
+        Window window = clue.getDialogPane().getScene().getWindow();
+        
+        clue.show();
+        window.setOnCloseRequest(e -> clue.close());
     }
 
     @Override

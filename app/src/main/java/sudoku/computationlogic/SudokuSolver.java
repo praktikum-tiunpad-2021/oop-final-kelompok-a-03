@@ -37,7 +37,11 @@ public class SudokuSolver {
                 } else {
                     index++;
 
+<<<<<<< HEAD
                     if (index == (jumlah-1)) {
+=======
+                    if (index == (40-1)) {
+>>>>>>> 73fd1613d528a563c8a83b6e7f4e40493a7528d6
                         return true;
                     }
 

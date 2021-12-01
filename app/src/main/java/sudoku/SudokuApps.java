@@ -26,6 +26,11 @@ public class SudokuApps extends Application {
     }
     
     uiImpl = new UserInterfaceImpl(primaryStage);
+    List<String> args = getParameters().getRaw();
+
+    if(!args.isEmpty()){
+      SudokuGame.difficulty = String.valueOf(args.get(0));
+    }
 
     try {
         SudokuBuildLogic.build(uiImpl);

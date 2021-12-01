@@ -11,15 +11,15 @@
 ## Sprint Overview
 | Planned (n)   | Completed (n) |
 | ------------- |-------------- |
-| 3             | n             |
+| 3             | 3             |
 
 ## Sprint 2 Backlog
 
 | ID  | Title/Desc | Asignee | Status |
 | --- | ---------- | ------- | ------ |
-| 2.1 | Tampilan Tombol Restart | Nama | - |
-| 2.2 | Tampilan String dan Clue | Nama | - |
-| 2.3 | Mengacak Angka	 | Nama | - |
+| 2.1 | Tampilan Tombol Restart | Alfadli | Done |
+| 2.2 | Tampilan String dan Clue | Wafi | Done |
+| 2.3 | Mengacak Angka	 | Faiq | Done |
 
 ## Retrospective 
 
@@ -28,7 +28,7 @@
 ## Next Sprint Backlog (Sprint 3)
 | ID  | Title/Desc | Asignee | 
 | --- | ---------- | ------- | 
-| 3.1 | Set angka yang tidak bisa diganti | - |
-| 3.2 | Cek input benar/salah | - |
-| 3.3 | Highlight grid yang bernilai sama | - |
-| 3.4 | Perbaikan tampilan | - | 
+| 3.1 | Set angka yang tidak bisa diganti | Alfadli |
+| 3.2 | Cek input benar/salah | Alfadli |
+| 3.3 | Highlight grid yang bernilai sama | Wafi |
+| 3.4 | Perbaikan tampilan | Faiq | 
