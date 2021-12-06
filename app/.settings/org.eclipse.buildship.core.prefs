@@ -1,17 +1,16 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=73fd1613d528a563c8a83b6e7f4e40493a7528d6
 arguments=
 auto.sync=false
 build.scans.enabled=false
-connection.gradle.distribution=GRADLE_DISTRIBUTION(VERSION(7.1.1))
-<<<<<<< HEAD
-connection.project.dir=..
-=======
+connection.gradle.distribution=GRADLE_DISTRIBUTION(WRAPPER)
 connection.project.dir=
->>>>>>> 73fd1613d528a563c8a83b6e7f4e40493a7528d6
 eclipse.preferences.version=1
 gradle.user.home=
-java.home=C\:/Program Files/Java/jdk-11.0.7
+java.home=
 jvm.arguments=
 offline.mode=false
-override.workspace.settings=true
-show.console.view=true
-show.executions.view=true
+override.workspace.settings=false
+show.console.view=false
+show.executions.view=false
