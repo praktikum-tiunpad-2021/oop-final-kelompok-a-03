@@ -23,6 +23,8 @@ public class SudokuApps extends Application {
 
     if(!args.isEmpty()){
       SudokuGame.difficulty = String.valueOf(args.get(0));
+    }else {
+      SudokuGame.difficulty = "easy";
     }
     
     uiImpl = new UserInterfaceImpl(primaryStage);

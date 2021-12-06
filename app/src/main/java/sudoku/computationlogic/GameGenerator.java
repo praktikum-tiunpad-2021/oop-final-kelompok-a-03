@@ -1,5 +1,6 @@
 package sudoku.computationlogic;
 
+import sudoku.SudokuApps;
 import sudoku.problemdomain.Coordinates;
 import sudoku.problemdomain.SudokuGame;
 
@@ -92,43 +93,32 @@ class GameGenerator{
     */
     private static int[][] unsolveGame(int[][] solvedGame) {
         Random random = new Random(System.currentTimeMillis());
-        boolean solvable = false;
         int emptyCells=45;
+        String diff = SudokuGame.difficulty;
 
-        if(SudokuGame.difficulty == "easy"){
+        if(diff.equals("easy")){
             emptyCells = 45;
-        }else if(SudokuGame.difficulty == "medium"){
+        }else if(diff.equals("medium")){
             emptyCells = 63;
-        }else if(SudokuGame.difficulty == "hard"){
+        }else if(diff.equals("hard")){
             emptyCells = 72;
         }
 
         int[][] solvableArray = new int[BATAS_GRID][BATAS_GRID];
 
-        while (solvable == false){
+        SudokuUtilities.copySudokuArrayValues(solvedGame, solvableArray);
 
-            SudokuUtilities.copySudokuArrayValues(solvedGame, solvableArray);
+        //Menghilangkan nilai
+        int count = 0;
+        while (count < emptyCells) {
+            int xCoordinate = random.nextInt(BATAS_GRID);
+            int yCoordinate = random.nextInt(BATAS_GRID);
 
-            //Menghilangkan nilai
-            int count = 0;
-            while (count < emptyCells) {
-                int xCoordinate = random.nextInt(BATAS_GRID);
-                int yCoordinate = random.nextInt(BATAS_GRID);
-
-                if (solvableArray[xCoordinate][yCoordinate] != 0) {
-                    solvableArray[xCoordinate][yCoordinate] = 0;
-                    count++;
-                }
+            if (solvableArray[xCoordinate][yCoordinate] != 0) {
+                solvableArray[xCoordinate][yCoordinate] = 0;
+                count++;
             }
-
-            int[][] toBeSolved = new int[BATAS_GRID][BATAS_GRID];
-            SudokuUtilities.copySudokuArrayValues(solvableArray, toBeSolved);
-            //periksa apahal hasilnya masih solvable
-            solvable = SudokuSolver.puzzleIsSolvable(toBeSolved, emptyCells);
-
-            System.out.println(solvable);
         }
-
         return solvableArray;
     }
 

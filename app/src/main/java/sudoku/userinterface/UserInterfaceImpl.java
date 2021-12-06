@@ -1,5 +1,6 @@
 package sudoku.userinterface;
 
+import sudoku.computationlogic.GameLogic;
 import sudoku.konstanta.GameState;
 import sudoku.problemdomain.Coordinates;
 import sudoku.problemdomain.SudokuGame;
@@ -28,7 +29,12 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.util.Optional;
+
+import javax.swing.text.Highlighter.Highlight;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class UserInterfaceImpl implements IUserInterface.View,
         EventHandler<KeyEvent>{
@@ -36,6 +42,7 @@ public class UserInterfaceImpl implements IUserInterface.View,
     private final Group root;
 
     private HashMap<Coordinates, SudokuTextField> textFieldCoordinates;
+    private List<Coordinates> highlighted = new ArrayList<>();
 
     private IUserInterface.EventListener listener;
 
@@ -46,7 +53,6 @@ public class UserInterfaceImpl implements IUserInterface.View,
     private static final double BOARD_X_AND_Y = 576;
     private static final Color WINDOW_BACKGROUND_COLOR = Color.rgb(40, 40, 40);
     private static final Color BOARD_BACKGROUND_COLOR = Color.rgb(224, 242, 241);
-    private static final String SUDOKU = "Sudoku";
 
     public UserInterfaceImpl(Stage stage) {
         this.stage = stage;
@@ -240,19 +246,40 @@ public class UserInterfaceImpl implements IUserInterface.View,
 
     @Override
     public void updateSquare(int x, int y, int input, Boolean condition) {
-        SudokuTextField tile = textFieldCoordinates.get(new Coordinates(x, y));
+        SudokuTextField inputTile = textFieldCoordinates.get(new Coordinates(x, y));
+        SudokuTextField highlightTile;
         
         String value = Integer.toString(
                 input
         );
 
-        if (value.equals("0")) value = "";
+        if (value.equals("0")){
+            value = "";
+        }
 
-        tile.textProperty().setValue(value);
-        if(condition == true){
-            tile.setStyle("-fx-text-inner-color:#ff0000;");
-        }else{
-            tile.setStyle("-fx-text-inner-color:green;");
+        inputTile.textProperty().setValue(value);
+
+        if(!GameLogic.wrongSquares.isEmpty()){
+            for (Coordinates coordinates : GameLogic.wrongSquares) {
+                highlighted.add(new Coordinates(coordinates.getX(), coordinates.getY()));
+            }
+            
+            for (Coordinates coordinates : highlighted) {
+                highlightTile = textFieldCoordinates.get(new Coordinates(coordinates.getX(), coordinates.getY()));
+                if(highlightTile == inputTile){
+                    inputTile.setStyle("-fx-text-inner-color:#ff0000");
+                }else{
+                    highlightTile.setStyle("-fx-control-inner-background: #ff0000");
+                }
+            }
+        }else {
+            inputTile.setStyle("-fx-text-inner-color: #00F521");
+
+            for (Coordinates coordinates : highlighted) {
+                highlightTile = textFieldCoordinates.get(new Coordinates(coordinates.getX(), coordinates.getY()));
+                highlightTile.setStyle("-fx-control-inner-background: #E0F2F1");
+            }
+            highlighted.clear();
         }
     }
 
@@ -276,6 +303,14 @@ public class UserInterfaceImpl implements IUserInterface.View,
                     } else {
                         tile.setStyle("-fx-opacity: 0.8;");
                         tile.setDisable(true);
+                    }
+                }else {
+                    if (!highlighted.isEmpty() && value.equals("")) {
+                        tile.setStyle("-fx-opacity: 0.8;");
+                        tile.setDisable(true);
+                    }else if (highlighted.isEmpty() && value.equals("")){
+                        tile.setStyle("-fx-opacity: 1;");
+                        tile.setDisable(false);
                     }
                 }
             }

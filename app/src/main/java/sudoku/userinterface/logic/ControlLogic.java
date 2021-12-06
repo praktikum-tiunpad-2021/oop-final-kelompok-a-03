@@ -4,9 +4,12 @@ package sudoku.userinterface.logic;
 import sudoku.konstanta.GameState;
 import sudoku.konstanta.Message;
 import sudoku.computationlogic.GameLogic;
+import sudoku.problemdomain.Coordinates;
 import sudoku.problemdomain.IStorage;
 import sudoku.problemdomain.SudokuGame;
 import sudoku.userinterface.IUserInterface;
+
+import java.util.*;
 
 import java.io.IOException;
 
@@ -28,12 +31,14 @@ public class ControlLogic implements IUserInterface.EventListener {
             newGridState[x][y] = input;
 
             gameData = new SudokuGame(
-                    GameLogic.checkForCompletion(newGridState),
-                    newGridState
+                GameLogic.checkForCompletion(newGridState),
+                newGridState
             );
 
             storage.updateGameData(gameData);
             view.updateSquare(x, y, input, GameLogic.sudokuIsInvalid(newGridState));
+            
+            view.updateBoard(gameData);
 
             if (gameData.getGameState() == GameState.COMPLETE) view.showDialog(Message.GAME_COMPLETE);
         } catch (IOException e) {

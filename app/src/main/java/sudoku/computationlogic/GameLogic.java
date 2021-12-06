@@ -7,21 +7,19 @@ import sudoku.problemdomain.Coordinates;
 
 import java.util.*;
 
+import javax.transaction.xa.Xid;
+
 import static sudoku.problemdomain.SudokuGame.BATAS_GRID;;
 
 public class GameLogic {
     //bikin attribut berupa list yang isinya koordinat angka yang sama. nantinya akan di oper2 
-    private static List<Coordinates> wrongSquares = new ArrayList<>();
+    public static List<Coordinates> wrongSquares = new ArrayList<>();
 
     public static SudokuGame getNewGame() {
         return new SudokuGame(
                 GameState.NEW,
                 GameGenerator.getNewGameGrid()
         );
-    }
-
-    public static List<Coordinates> getWrongSquares() {
-        return wrongSquares;
     }
 
     //Memeriksa kondisi game saat ini (aktif atau selesai)
@@ -44,9 +42,9 @@ public class GameLogic {
 
     //Memeriksa apakah kondisi game valid (sesuai syarat sudoku) atau tidak setelah petak kosong diisi
     public static boolean sudokuIsInvalid(int[][] grid) {
+        if (squaresAreInvalid(grid)) return true;
         if (rowsAreInvalid(grid)) return true;
         if (columnsAreInvalid(grid)) return true;
-        if (squaresAreInvalid(grid)) return true;
         else return false;
     }
 
@@ -100,46 +98,56 @@ public class GameLogic {
         int yIndexEnd = yIndex + 3;
         int xIndexEnd = xIndex + 3;
 
+        int xTemp = xIndex;
+        int yTemp = yIndex;
+
         List<Integer> square = new ArrayList<>();
 
-        while (yIndex < yIndexEnd) {
-
-            while (xIndex < xIndexEnd) {
-                if(square.contains(grid[xIndex][yIndex])){
-                    wrongSquares.add(new Coordinates(xIndex, yIndex));
-                }
-
+        while (yTemp < yIndexEnd) {
+            while (xTemp < xIndexEnd) {
                 square.add(
-                    grid[xIndex][yIndex]
+                    grid[xTemp][yTemp]
                 );
 
-                xIndex++;
+                xTemp++;
             }
-            xIndex -= 3;
+            xTemp -= 3;
 
-            yIndex++;
+            yTemp++;
         }
 
-        if (collectionHasRepeats(square)) {
+        int repeatedNum = collectionHasRepeats(square);
+
+        if (repeatedNum != -1) {
+            for (int i = 0; i < square.size(); i++) {
+                if(square.get(i) == repeatedNum){
+                    wrongSquares.add(new Coordinates((i%3)+xIndex, (i/3)+yIndex));
+                }
+            }
             return true;
-        }
-        
-        return false;
+        }else {
+            return false;
+        }    
     }
 
     public static boolean columnsAreInvalid(int[][] grid) {
         for (int xIndex = 0; xIndex < BATAS_GRID; xIndex++) {
             List<Integer> column = new ArrayList<>();
             for (int yIndex = 0; yIndex < BATAS_GRID; yIndex++) {
-                if(column.contains(grid[xIndex][yIndex])){
-                    wrongSquares.add(new Coordinates(xIndex, yIndex));
-                }
-
                 column.add(grid[xIndex][yIndex]);
             }
 
-            if (collectionHasRepeats(column)) return true;
-        }
+            int repeatedNum = collectionHasRepeats(column);
+
+            if (repeatedNum != -1) {
+                for (int i = 0; i < column.size(); i++) {
+                    if(column.get(i) == repeatedNum){
+                        wrongSquares.add(new Coordinates(xIndex, i));
+                    }
+                }
+                return true;
+            }
+        }  
 
         return false;
     }
@@ -148,24 +156,30 @@ public class GameLogic {
         for (int yIndex = 0; yIndex < BATAS_GRID; yIndex++) {
             List<Integer> row = new ArrayList<>();
             for (int xIndex = 0; xIndex < BATAS_GRID; xIndex++) {
-                if(row.contains(grid[xIndex][yIndex])){
-                    wrongSquares.add(new Coordinates(xIndex, yIndex));
-                }
                 row.add(grid[xIndex][yIndex]);
             }
 
-            if (collectionHasRepeats(row)) return true;
+            int repeatedNum = collectionHasRepeats(row);
+
+            if (repeatedNum != -1) {
+                for (int i = 0; i < row.size(); i++) {
+                    if(row.get(i) == repeatedNum){
+                        wrongSquares.add(new Coordinates(i, yIndex));
+                    }
+                }
+                return true;
+            }
         }
 
         return false;
     }
 
-    public static boolean collectionHasRepeats(List<Integer> collection) {
+    public static int collectionHasRepeats(List<Integer> collection) {
         //method frequency akan mengembalikan jumlah elemen yang sama pada list
         for (int index = 1; index <= BATAS_GRID; index++) {
-            if (Collections.frequency(collection, index) > 1) return true;
+            if (Collections.frequency(collection, index) > 1) return index;
         }
 
-        return false;
+        return -1;
     }
 }

@@ -16,7 +16,7 @@ public class SudokuBuildLogic {
     public static void build(IUserInterface.View userInterface) throws IOException {
         SudokuGame initialState;
         IStorage storage = new LocalStorageImpl();
-            
+
         initialState = GameLogic.getNewGame();
         storage.updateGameData(initialState);
 
