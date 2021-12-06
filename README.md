@@ -42,7 +42,9 @@ Sudoku merupakan puzzle yang berbasis logika dimana pemain dapat meletakkan angk
 
 ## Running The App
 
-TO;DO with steps
+- Arahkan directory pada repo
+- Jalankan dengan perintah gradlew run
+- Sudoku akan dibuat dengan difficulty easy secara default. User dapat memilih difficulty dengan menuliskannya di argumen. Command "gradlew run --args:(easy, medium, hard)"
 
 ## Classes Used
 
