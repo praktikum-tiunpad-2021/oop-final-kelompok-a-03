@@ -65,7 +65,7 @@ Sudoku merupakan puzzle yang berbasis logika dimana pemain dapat meletakkan angk
 - sudoku.buildlogic.SudokuBuildLogic => memiliki method build untuk memulai game baru.
 - sudoku.SudokuApps => Class yang memiliki main method, juga method start milik javafx.
 
-UML image here
+<img src="UML.png">
 
 ## Notable Assumption and Design App Details
 
